@@ -1,0 +1,42 @@
+From 79b8e722847a4f9df404cf091bd52c916bd1f059 Mon Sep 17 00:00:00 2001
+From: Matthias Schoepfer <m.schoepfer@rethinkrobotics.com>
+Date: Wed, 9 Aug 2023 14:26:34 +0200
+Subject: [PATCH] oe-specific: removing current source dir from pkg
+
+The if part will be ("FALSE" STREQUAL "TRUE") for open embedded
+builds, but still the tmpdir is going into the -dev part of the
+package. To avoid that, we remove the branch alltogether.
+
+OE-Specific
+
+Signed-off-by: Matthias Schoepfer <m.schoepfer@rethinkrobotics.com>
+---
+ cmake/templates/pkgConfig.cmake.in | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
+
+diff --git a/cmake/templates/pkgConfig.cmake.in b/cmake/templates/pkgConfig.cmake.in
+index d084c480..519fcaed 100644
+--- a/cmake/templates/pkgConfig.cmake.in
++++ b/cmake/templates/pkgConfig.cmake.in
+@@ -66,17 +66,10 @@ endif()
+ set(@PROJECT_NAME@_CONFIG_INCLUDED TRUE)
+ 
+ # set variables for source/devel/install prefixes
+-if("@DEVELSPACE@" STREQUAL "TRUE")
+-  set(@PROJECT_NAME@_SOURCE_PREFIX @CMAKE_CURRENT_SOURCE_DIR@)
+-  set(@PROJECT_NAME@_DEVEL_PREFIX @CATKIN_DEVEL_PREFIX@)
+-  set(@PROJECT_NAME@_INSTALL_PREFIX "")
+-  set(@PROJECT_NAME@_PREFIX ${@PROJECT_NAME@_DEVEL_PREFIX})
+-else()
+-  set(@PROJECT_NAME@_SOURCE_PREFIX "")
+-  set(@PROJECT_NAME@_DEVEL_PREFIX "")
+-  set(@PROJECT_NAME@_INSTALL_PREFIX @CMAKE_INSTALL_PREFIX@)
+-  set(@PROJECT_NAME@_PREFIX ${@PROJECT_NAME@_INSTALL_PREFIX})
+-endif()
++set(@PROJECT_NAME@_SOURCE_PREFIX "")
++set(@PROJECT_NAME@_DEVEL_PREFIX "")
++set(@PROJECT_NAME@_INSTALL_PREFIX @CMAKE_INSTALL_PREFIX@)
++set(@PROJECT_NAME@_PREFIX ${@PROJECT_NAME@_INSTALL_PREFIX})
+ 
+ if(CMAKE_CROSSCOMPILING)
+   if("@DEVELSPACE@" STREQUAL "TRUE")
