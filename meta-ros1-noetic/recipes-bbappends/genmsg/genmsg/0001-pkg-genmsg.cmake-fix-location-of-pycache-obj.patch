@@ -1,0 +1,32 @@
+From bc2444f1328e4c3f6c70f7363a93591c4d71547f Mon Sep 17 00:00:00 2001
+From: Matthias Schoepfer <m.schoepfer@rethinkrobotics.com>
+Date: Fri, 1 Sep 2023 11:24:20 +0200
+Subject: [PATCH] pkg-genmsg.cmake: fix location of pycache obj
+
+Without the -d switch, the host location of the source files
+that get compiled with -m compileall gets injected into the object
+files. This is unwanted behavior, as it leaks information of the
+host and also does not provide correct information to the python
+interpreter, as such files are no longer available on the host.
+
+Signed-off-by: Matthias Schoepfer <m.schoepfer@rethinkrobotics.com>
+---
+ cmake/pkg-genmsg.cmake.em | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/pkg-genmsg.cmake.em b/cmake/pkg-genmsg.cmake.em
+index eca9adc..9c4dbc4 100644
+--- a/cmake/pkg-genmsg.cmake.em
++++ b/cmake/pkg-genmsg.cmake.em
+@@ -137,7 +137,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS @(pkg_name)_generate_messages_@(l[3
+ 
+ if(@(l)_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${@(l)_INSTALL_DIR}/@pkg_name)
+ @[if l == 'genpy']@
+-  install(CODE "execute_process(COMMAND \"@(PYTHON_EXECUTABLE)\" -m compileall \"${CATKIN_DEVEL_PREFIX}/${@(l)_INSTALL_DIR}/@pkg_name\")")
++  install(CODE "execute_process(COMMAND \"@(PYTHON_EXECUTABLE)\" -m compileall-d \"${CMAKE_INSTALL_PREFIX}/${@(l)_INSTALL_DIR}/@pkg_name\" \"${CATKIN_DEVEL_PREFIX}/${@(l)_INSTALL_DIR}/@pkg_name\")")
+ @[end if]@
+   # install generated code
+   install(
+-- 
+2.34.1
+
