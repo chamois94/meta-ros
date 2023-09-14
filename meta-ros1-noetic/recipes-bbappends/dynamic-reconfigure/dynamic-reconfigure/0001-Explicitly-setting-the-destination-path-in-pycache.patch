@@ -1,0 +1,42 @@
+From 9cfa7eaac31b73bb5059eda62be45051e73b2a55 Mon Sep 17 00:00:00 2001
+From: Matthias Schoepfer <m.schoepfer@rethinkrobotics.com>
+Date: Wed, 13 Sep 2023 17:37:56 +0200
+Subject: [PATCH] Explicitly setting the destination path in pycache
+
+When doing compileall, we explicitly set the path to the install path.
+Otherwise, the path of the host gets injected into for example the
+debian that gets created an is wrong. Currently, for example
+the path in the official ubuntu package is:
+```
+/tmp/binarydeb/ros-noetic-nodelet-topic-tools-1.10.2/obj-x86_64-linux-gnu/devel/lib/python3/dist-packages/nodelet_topic_tools/cfg/NodeletThrottleConfig.py
+```
+
+but should be
+
+```
+/opt/ros/noetic/lib/python3/dist-packages/nodelet_topic_tools/cfg/NodeletThrottleConfig.py
+```
+
+Upstream-Status: pending https://github.com/ros/dynamic_reconfigure/pull/200
+
+Signed-off-by: Matthias Schoepfer <m.schoepfer@rethinkrobotics.com>
+---
+ cmake/dynamic_reconfigure-macros.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/dynamic_reconfigure-macros.cmake b/cmake/dynamic_reconfigure-macros.cmake
+index 23ccd92..0e3367d 100644
+--- a/cmake/dynamic_reconfigure-macros.cmake
++++ b/cmake/dynamic_reconfigure-macros.cmake
+@@ -126,7 +126,7 @@ macro(dynreconf_called)
+ 
+     # compile python code before installing
+     find_package(PythonInterp REQUIRED)
+-    install(CODE "execute_process(COMMAND \"${PYTHON_EXECUTABLE}\" -m compileall \"${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}/cfg\")")
++    install(CODE "execute_process(COMMAND \"${PYTHON_EXECUTABLE}\" -m compileall -d \"${CMAKE_INSTALL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}/cfg\" \"${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}/cfg\")")
+     install(
+       DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}/cfg
+       DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+-- 
+2.41.0
+
