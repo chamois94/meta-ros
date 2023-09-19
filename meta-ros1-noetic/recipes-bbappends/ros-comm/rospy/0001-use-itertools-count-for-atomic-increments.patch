@@ -1,0 +1,39 @@
+From 0bb3900fe06c84adb9ad7e2ad22a165ff03f8c9e Mon Sep 17 00:00:00 2001
+From: Thomas Grainger <tagrain@gmail.com>
+Date: Fri, 23 Sep 2022 15:12:07 +0100
+Subject: [PATCH] use itertools count for atomic increments
+
+---
+ src/rospy/impl/transport.py | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
+
+diff --git a/src/rospy/impl/transport.py b/src/rospy/impl/transport.py
+index f53b7b88d..7c65fb32a 100644
+--- a/src/rospy/impl/transport.py
++++ b/src/rospy/impl/transport.py
+@@ -40,20 +40,11 @@ TCP/IP connections, etc...
+ For topic implementations, see L{topics}
+ """
+ 
+-import threading
++import itertools
+ 
+ # we need ids for the transports so we can send the IDs instead of
+ # full connection details
+-_transport_id = 0
+-_id_lock = threading.Lock()
+-def _nextId():
+-    global _transport_id
+-    try:
+-        _id_lock.acquire()
+-        _transport_id += 1
+-        return _transport_id
+-    finally:
+-        _id_lock.release()
++_nextId = itertools.count().__next__
+ 
+ INBOUND = 'i'
+ OUTBOUND = 'o'
+-- 
+2.34.1
+

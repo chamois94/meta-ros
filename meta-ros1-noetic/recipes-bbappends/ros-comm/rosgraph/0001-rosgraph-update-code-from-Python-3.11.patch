@@ -1,0 +1,33 @@
+From 20f2017f46a1e28c9cf63f0200a3255505fa1824 Mon Sep 17 00:00:00 2001
+From: Jochen Sprickerhof <git@jochen.sprickerhof.de>
+Date: Sun, 13 Nov 2022 16:39:59 +0100
+Subject: [PATCH] rosgraph: update code from Python 3.11
+
+---
+ src/rosgraph/roslogging.py | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/src/rosgraph/roslogging.py b/src/rosgraph/roslogging.py
+index 9ecc12189..2df2f228c 100644
+--- a/src/rosgraph/roslogging.py
++++ b/src/rosgraph/roslogging.py
+@@ -62,13 +62,12 @@ class RospyLogger(logging.getLoggerClass()):
+         if f is not None:
+             f = f.f_back
+         while hasattr(f, "f_code"):
+-            # Search for the right frame using the data already found by parent class.
+-            co = f.f_code
+-            filename = os.path.normcase(co.co_filename)
+-            if filename == file_name and f.f_lineno == lineno and co.co_name == func_name:
++            if f.f_code.co_name == '_base_logger':
+                 break
+             if f.f_back:
+                 f = f.f_back
++            else:
++                break
+ 
+         # Jump up two more frames, as the logger methods have been double wrapped.
+         if f is not None and f.f_back and f.f_code and f.f_code.co_name == '_base_logger':
+-- 
+2.34.1
+

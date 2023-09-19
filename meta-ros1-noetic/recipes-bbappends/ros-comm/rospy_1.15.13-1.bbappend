@@ -6,3 +6,10 @@
 # Needed for rospy to work without native recipes respecting RDEPENDS in oe-core/thud without
 # http://git.openembedded.org/openembedded-core/commit/?id=c62520b63284927e177831c351fafa4d2768cb1f
 ROS_BUILD_DEPENDS += "${ROS_EXEC_DEPENDS}"
+
+## new stuff not copyrighted by LG
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+
+SRC_URI:append = " \
+    file://0001-use-itertools-count-for-atomic-increments.patch \
+"
