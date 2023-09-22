@@ -4,6 +4,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI:append = " \
     file://0001-cmake-do-not-leak-absolute-path-into-cmake-package-c.patch \
+    file://0001-CompilerSettings.cmake-remove-Werror.patch \
 "
 
 # prevent [dev-so] qa in package
