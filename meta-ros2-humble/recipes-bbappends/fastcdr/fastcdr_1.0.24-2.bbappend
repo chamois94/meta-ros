@@ -4,4 +4,4 @@ FILES:${PN}-dev += " \
     ${libdir}/libfastcdr.so.1 \
 "
 
-BBCLASSEXTEND = "native"
+BBCLASSEXTEND = "native nativesdk"
