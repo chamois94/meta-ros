@@ -1,3 +1,9 @@
+# CMake Error: TRY_RUN() invoked in cross-compiling mode, please set the
+# following cache variables appropriately:
+#    SM_RUN_RESULT (advanced)
+#    SM_RUN_RESULT__TRYRUN_OUTPUT (advanced)
+EXTRA_OECMAKE += " -DSM_RUN_RESULT=0 -DSM_RUN_RESULT__TRYRUN_OUTPUT=PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP "
+
 # remove /usr/tool directory from install to fix install-vs-shipped QA
 do_install:append() {
     rm -Rf ${D}/usr/tools
