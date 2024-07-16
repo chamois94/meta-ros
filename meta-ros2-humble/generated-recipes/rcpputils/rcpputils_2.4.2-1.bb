@@ -51,10 +51,10 @@ DEPENDS += "${ROS_EXPORT_DEPENDS} ${ROS_BUILDTOOL_EXPORT_DEPENDS}"
 
 RDEPENDS:${PN} += "${ROS_EXEC_DEPENDS}"
 
-# matches with: https://github.com/ros2-gbp/rcpputils-release/archive/release/humble/rcpputils/2.4.0-2.tar.gz
+# matches with: https://github.com/ros2-gbp/rcpputils-release/archive/release/humble/rcpputils/2.4.2-1.tar.gz
 ROS_BRANCH ?= "branch=release/humble/rcpputils"
 SRC_URI = "git://github.com/ros2-gbp/rcpputils-release;${ROS_BRANCH};protocol=https"
-SRCREV = "03a637a8c85d0d9c7ca678b41e5b24763c7d46ee"
+SRCREV = "9eefc959caf3e132078ff73b4c0046c7e38040ce"
 S = "${WORKDIR}/git"
 
 ROS_BUILD_TYPE = "ament_cmake"
