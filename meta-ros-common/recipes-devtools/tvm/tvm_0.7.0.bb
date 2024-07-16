@@ -7,6 +7,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=e313a9b6eda820e35716d9529001537f"
 
 # matches with tag 0.7.0
+SRCREV_FORMAT = "main_dlmc-core_dlpack_rang_vta-hw"
 SRCREV = "728b829575e5e690870b111ae2256cbe0f3dbe6f"
 SRCREV_dlmc-core = "6c401e242c59a1f4c913918246591bb13fd714e7"
 SRCREV_dlpack = "3ec04430e89a6834e5a1b99471f415fa939bf642"

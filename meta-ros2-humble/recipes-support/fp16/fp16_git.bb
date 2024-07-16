@@ -6,6 +6,7 @@ SRC_URI = " \
     git://github.com/Maratyszcza/psimd.git;protocol=https;destsuffix=git/psimd;name=psimd \
 "
 
+SRCREV_FORMAT = "fp16_psimd"
 SRCREV_fp16 = "c911175d2717e562976e606c6e5f799bf40cf94e"
 SRCREV_psimd = "072586a71b55b7f8c584153d223e95687148a900"
 
