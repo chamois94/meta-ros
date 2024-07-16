@@ -10,7 +10,7 @@ AUTHOR = "MoveIt Release Team <moveit_releasers@googlegroups.com>"
 ROS_AUTHOR = "Sebastian Jahr <sebastian.jahr@picknik.ai>"
 HOMEPAGE = "http://moveit.ros.org"
 SECTION = "devel"
-LICENSE = "BSD"
+LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://package.xml;beginline=9;endline=9;md5=d566ef916e9dedc494f5f793a6690ba5"
 
 ROS_CN = "moveit"
